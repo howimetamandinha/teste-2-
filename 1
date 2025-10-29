@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Softwave Tech - Serviços e Especialidades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDQeJzT3W64Cq5W48I6tM2g5Y9M0414M3/m+d5/b6wM18Wv5jN7n2y3z7F6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Poppins',sans-serif;
+      min-height:100vh;
+      background: linear-gradient(135deg,#0a1f33,#004e92,#0077b6);
+      background-size:400% 400%;
+      animation:gradientShift 12s ease infinite;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      color:white;
+      padding-top:72px;
+    }
+    @keyframes gradientShift{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    header{
+      position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,0.25);backdrop-filter:blur(8px);z-index:200;padding:0 20px;
+    }
+    nav{display:flex;gap:22px;}
+    nav a{
+      color:white;text-decoration:none;font-weight:600;padding:8px 10px;border-radius:6px;
+      transition:background .18s, color .18s;
+    }
+    nav a.active,
+    nav a:hover{
+      background:rgba(255,255,255,0.06);text-decoration:underline;
+    }
+
+    main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:30px 20px 120px;
+    }
+
+    /* ---------- SEÇÃO INÍCIO COM TRANSPARÊNCIA ---------- */
+    #inicio{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;margin-top:20px;
+      background: rgba(0,0,0,0.28);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    #inicio h1{font-size:3.6rem;margin-bottom:12px;font-weight:800;text-transform:uppercase;text-shadow:0 6px 20px rgba(0,0,0,0.6);letter-spacing:2px;}
+    #inicio p{font-size:1.5rem;font-weight:500;color:#a8e1ff;text-shadow:0 4px 12px rgba(0,0,0,0.5);}
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+      max-width: 1000px;
+    }
+    .image-grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .image-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* SEÇÕES SECUNDÁRIAS SEM TRANSPARÊNCIA */
+    section{
+      display:none;
+      padding:36px;
+      margin:30px auto;
+      max-width:1100px;
+      background: #0a1f33; /* sólido */
+      border-radius:12px;
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .5s ease, transform .5s ease;
+    }
+    section.visible{
+      display:block;
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    h1{font-size:2.2rem;margin-bottom:20px;text-align:center;font-weight:700;}
+    h2{font-size:1.5rem;margin-top:14px;margin-bottom:10px;color:#00b4d8;}
+    p,li{font-size:1.05rem;line-height:1.8;margin-bottom:12px;color:rgba(255,255,255,0.95);}
+    ul{margin-left:18px;}
+    
+    form{display:flex;flex-direction:column;gap:12px;margin-top:10px;}
+    input,textarea{padding:12px;border:none;border-radius:8px;background:rgba(255,255,255,0.09);color:white;outline:none;}
+    input::placeholder,textarea::placeholder{color:rgba(255,255,255,0.7);}
+    button{background:#00b4d8;color:white;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:700;transition:transform .12s,background .12s;}
+    button:hover{background:#0096c7;transform:translateY(-2px);}
+    
+    #footer {
+      padding:18px;text-align:center;background:#0a1f33;color:rgba(255,255,255,0.9);transition: all .3s;
+    }
+    #footer.fixed {
+      position:fixed;bottom:0;left:0;width:100%;z-index:100;
+    }
+    #footer a{color:#00b4d8;text-decoration:none;font-weight:600;}
+    #footer a:hover{text-decoration:underline;}
+
+    .waves{
+      position:fixed;bottom:0;left:0;width:200%;height:160px;overflow:hidden;transform:rotate(180deg);z-index:10;
+    }
+    .waves svg{width:200%;height:160px;animation:waveMove 12s linear infinite;}
+    .waves path{fill:rgba(255,255,255,0.08);}
+    @keyframes waveMove{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+    .form-message{padding:10px 12px;border-radius:8px;margin-top:6px;font-weight:600;}
+    .form-success{background:rgba(0,255,186,0.12);color:#00ffcc;border:1px solid rgba(0,255,186,0.12);}
+    .form-error{background:rgba(255,80,80,0.08);color:#ff8888;border:1px solid rgba(255,80,80,0.08);}
+    
+    @media (max-width:600px){
+      #inicio h1{font-size:2.4rem;}
+      #inicio p{font-size:1.1rem;}
+      header{padding:0 12px;}
+      section{padding:20px;}
+      .image-grid img{height:160px;}
+    }
+
+    /* SEÇÃO SOBRE NÓS */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .info-card {
+      background: #0a1f33;
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+    }
+    .info-card h2 {
+      margin-top: 0;
+      color: #00eaff;
+      border-bottom: 2px solid rgba(0, 180, 216, 0.5);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    .team-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .team-member {
+      background: #004e92;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-weight: 500;
+      color: #b3e6ff;
+      font-size: 0.95rem;
+    }
+
+    /* SERVIÇOS */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+    .service-item {
+        background: #004e92;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+    }
+    .service-item:hover {
+        transform: translateY(-5px);
+        background: #0077b6;
+    }
+    .service-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+    }
+    .service-title i {
+        font-size: 1.8rem;
+        color: #00eaff;
+        margin-right: 15px;
+        text-shadow: 0 0 8px rgba(0, 234, 255, 0.6);
+    }
+    .service-title h3 {
+        font-size: 1.3rem;
+        color: white;
+        margin: 0;
+    }
+    .service-item p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 0;
+    }
+  </style>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try{ emailjs.init("SEU_PUBLIC_KEY_AQUI"); }catch(e){}
+
+      const links = document.querySelectorAll('nav a');
+      const sections = document.querySelectorAll('main section');
+      const footer = document.getElementById('footer');
+
+      function showSection(id){
+        sections.forEach(section => {
+          if(section.id === id){
+            section.style.display = 'block';
+            section.classList.add('visible');
+          } else {
+            section.style.display = 'none';
+            section.classList.remove('visible');
+          }
+        });
+      }
+
+      function updateFooter(id){
+        if(id === 'inicio' || id === 'contato'){
+          footer.classList.add('fixed');
+        } else {
+          footer.classList.remove('fixed');
+        }
+      }
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e){
+          e.preventDefault();
+          const target = link.dataset.target || link.getAttribute('href').substring(1);
+
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+
+          showSection(target);
+          updateFooter(target);
+
+          window.scrollTo({ top: 72, behavior: 'smooth' });
+        });
+      });
+
+      showSection('inicio');
+      updateFooter('inicio');
+
+      const form = document.getElementById('contact-form');
+      const feedback = document.getElementById('form-feedback');
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          feedback.innerHTML = '<div class="form-message form-success">Mensagem enviada com sucesso! (Simulação local)</div>';
+          form.reset();
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <nav aria-label="Menu principal">
+      <a href="#inicio" data-target="inicio" class="active">Início</a>
+      <a href="#sobre" data-target="sobre">Sobre Nós</a>
+      <a href="#projeto" data-target="projeto">Serviços</a>
+      <a href="#contato" data-target="contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="visible">
+      <h1>SOFTWAVE TECH</h1>
+      <p>Softwares dinâmicos, em movimento</p>
+
+      <div class="image-grid">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Programação em equipe">
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80" alt="Inteligência Artificial moderna">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Tecnologia avançada">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Desenvolvimento de software">
+      </div>
+    </section>
+
+    <section id="sobre">
+      <h1>👋 Sobre a Softwave Tech</h1>
+      <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
+        A Softwave Tech surgiu na faculdade, nascida da paixão por inovação.
+        Desde então, seguimos com o propósito de desenvolver softwares dinâmicos e inteligentes,
+        sempre evoluindo e se adaptando às necessidades de cada cliente.
+      </p>
+
+      <div class="card-grid">
+        <div class="info-card">
+          <h2>Missão</h2>
+          <p>Desenvolver soluções tecnológicas inovadoras que tornem os processos mais ágeis, eficientes e acessíveis.</p>
+        </div>
+        <div class="info-card">
+          <h2>Visão</h2>
+          <p>Proporcionar soluções que inspirem inovação e transformação digital, criando softwares dinâmicos e inteligentes.</p>
+        </div>
+        <div class="info-card">
+          <h2>Valores</h2>
+          <ul>
+            <li>Inovação constante</li>
+            <li>Comprometimento com a qualidade</li>
+            <li>Trabalho em equipe</li>
+            <li>Transparência e ética</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Equipe Fundadora</h2>
+      <div class="team-list">
+        <span class="team-member">Amanda Oliveira</span>
+        <span class="team-member">Rodrigo Yudi</span>
+        <span class="team-member">Vinicius Levi</span>
+        <span class="team-member">Weslley Beserra</span>
+      </div>
+    </section>
+
+    <section id="projeto">
+      <h1>⭐ Nossos Serviços e Especialidades</h1>
+      <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">
+        Oferecemos soluções tecnológicas focadas em desempenho e inovação.
+      </p>
+
+      <div class="services-grid">
+        <div class="service-item">
+          <div class="service-title">
+            <i class="fa-solid fa-laptop-code"></i> <h3>Desenvolvimento de Sistemas Personalizados</h3>
+          </div>
+          <p>Criação de soluções digitais inteligentes e adaptáveis, com metodologias ágeis.</p>
+        </div>
+
+        <div class="service-item">
+          <div class="service-title">
+            <i class="fa-solid fa-brain"></i> <h3>Integração de Inteligência Artificial (IA)</h3>
+          </div>
+          <p>Implementação de IA e aprendizado de máquina para análise e automatização inteligente.</p>
+        </div>
+
+        <div class="service-item">
+          <div class="service-title">
+            <i class="fa-solid fa-robot"></i> <h3>Automação de Processos</h3>
+          </div>
+          <p>Soluções completas de RPA para otimizar tarefas repetitivas e fluxos empresariais.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <h1>📞 Contato</h1>
+      <p>Entre em contato ou siga-nos no Instagram: 
+        <a href="https://instagram.com/devsoftwavetech" target="_blank" style="color:#00b4d8;">@devsoftwavetech</a>
+      </p>
+
+      <form id="contact-form">
+        <input type="text" placeholder="Seu nome" required />
+        <input type="email" placeholder="Seu e-mail" required />
+        <textarea placeholder="Sua mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+        <div id="form-feedback"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <p>© 2025 Softwave Tech | Todos os direitos reservados. | 
+      <a href="https://instagram.com/devsoftwavetech" target="_blank">@devsoftwavetech</a>
+    </p>
+  </footer>
+
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+      <path d="M0,0 C300,140 900,10 1200,120 L1200,200 L0,200 Z"></path>
+    </svg>
+  </div>
+</body>
+</html>
